@@ -8,7 +8,7 @@ function HomePage() {
   const [count, setCount] = useState(0);
 
   return (
-    <>
+    <div className={css.root}>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className={css.logo} alt="Vite logo" />
@@ -33,7 +33,7 @@ function HomePage() {
       <p className={css.readTheDocs}>
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </div>
   );
 }
 
