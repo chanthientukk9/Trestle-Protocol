@@ -10,7 +10,7 @@ const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   onClick,
 }) => {
   return (
-    <button className="h-10 py-0 px-3.5 bg-white text-black font-bold font-quicksand rounded-xl" onClick={onClick} type="button">
+    <button className="text-white font-quicksand w-full font-bold text-lg text-center bg-[url('/btngradient.svg')] bg-no-repeat bg-cover rounded-3xl py-4 px-2.5 cursor-pointer hover:brightness-125 active:opacity-75" onClick={onClick} type="button">
       {children}
     </button>
   );

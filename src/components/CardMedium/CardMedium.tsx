@@ -1,9 +1,10 @@
 import React from "react";
+import BasicCard from "../BasicCard";
 
-function Card({ data: rawData }: { data?: { title: string; value: string }[] }) {
+function CardMedium({ data: rawData }: { data?: { title: string; value: string }[] }) {
   const data = rawData || []
   return (
-    <div className="relative flex flex-col md:mt-4 w-full lg:w-full justify-between mx-auto border-2 border-white/10 rounded-3xl z-30 bg-[#0F1015]/80 py-8 px-10">
+    <BasicCard className="md:mt-4">
       {(data || []).map((item, index) => (
         <React.Fragment key={index}>
           <div key={`content-${index}`} className="flex flex-col gap-8 justify-center items-start w-full">
@@ -25,8 +26,8 @@ function Card({ data: rawData }: { data?: { title: string; value: string }[] }) 
           )}
         </React.Fragment>
       ))}
-    </div>
+    </BasicCard>
   );
 }
 
-export default Card;
+export default CardMedium;

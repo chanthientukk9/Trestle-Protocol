@@ -1,13 +1,14 @@
+import BasicCard from "../BasicCard";
 import IconExternal from "../IconExternal";
 
 function AddressListCard({
   data: rawData,
 }: {
-  data?: { title: string; value: string; shortValue: string, url: string }[];
+  data?: { title: string; value: string; shortValue: string; url: string }[];
 }) {
   const data = rawData || [];
   return (
-    <div className="relative flex flex-col md:mt-4 w-full lg:w-full justify-between mx-auto border-2 border-white/10 rounded-3xl z-30 bg-[#0F1015]/80 py-8 px-10">
+    <BasicCard className="md:mt-4">
       <div className="flex flex-col gap-8 justify-center items-start w-full">
         <div className="flex flex-col gap-2 justify-start items-start w-full h-full">
           {(data || []).map((item, index) => (
@@ -48,7 +49,7 @@ function AddressListCard({
           ))}
         </div>
       </div>
-    </div>
+    </BasicCard>
   );
 }
 

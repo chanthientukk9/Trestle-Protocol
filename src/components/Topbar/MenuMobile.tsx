@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import xLogo from "../../assets/x-logo.svg";
 import telegramLogo from "../../assets/telegram-logo.svg";
-import { ConnectButton, useConnectModal } from "@rainbow-me/rainbowkit";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import css from "./Topbar.module.css";
 
 function MenuFooter() {
@@ -30,10 +30,10 @@ function MenuFooter() {
               </a>
             </li>
           </div>
-          <span className="text-2xl text-white text-center font-dmSans font-extrabold mt-5 mb-5">
+          <span className="text-2xl text-white text-center font-quicksand font-extrabold mt-5 mb-5">
             Trestle
           </span>
-          <span className="text-lg text-white/50 text-center font-dmSans">
+          <span className="text-lg text-white/50 text-center font-quicksand">
             ©&nbsp;all copyrights reserved to Trestle 2024
           </span>
         </div>
@@ -54,7 +54,7 @@ function MenuMobileItem({
   isDisable?: boolean;
 }) {
   const defaultClasses =
-    "block py-2 pl-3 pr-4 text-3xl font-dmSans font-medium rounded md:bg-transparent md:p-0 text-white hover:text-white/50 transition-all duration-300 ease-in-out hover:underline";
+    "block py-2 pl-3 pr-4 text-3xl font-quicksand font-medium rounded md:bg-transparent md:p-0 text-white hover:text-white/50 transition-all duration-300 ease-in-out hover:underline";
   const normalClasses = `${defaultClasses} cursor-pointer`;
   const activeClasses = `${defaultClasses} underline cursor-text`;
   const disableClasses = `${defaultClasses} opacity-50 cursor-not-allowed`;
@@ -119,7 +119,7 @@ function MenuMobile() {
             <a
               href="https://trestle-protocol.gitbook.io/trestle-docs/"
               target="_blank"
-              className="block py-2 pl-3 pr-4 text-3xl font-dmSans font-medium rounded md:bg-transparent md:p-0 text-white cursor-pointer hover:text-white/50 transition-all duration-300 ease-in-out hover:underline"
+              className="block py-2 pl-3 pr-4 text-3xl font-quicksand font-medium rounded md:bg-transparent md:p-0 text-white cursor-pointer hover:text-white/50 transition-all duration-300 ease-in-out hover:underline"
               aria-current="page"
             >
               Docs

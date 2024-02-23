@@ -7,16 +7,16 @@ function Footer() {
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-white/5 lg:my-8" />
         <div className="flex flex-col gap-4 items-center justify-center">
-          <span className="text-xl text-white text-center font-dmSans font-extrabold">
+          <span className="text-xl text-white text-center font-quicksand font-extrabold">
             Trestle
           </span>
           <a
             href="mailto:info@trestleprotocol.io"
-            className="text-base text-white/50 text-center font-dmSans"
+            className="text-base text-white/50 text-center font-quicksand"
           >
             info@trestleprotocol.io
           </a>
-          <span className="text-base text-white/50 text-center font-dmSans">
+          <span className="text-base text-white/50 text-center font-quicksand">
             ©&nbsp;all copyrights reserved to Trestle 2024
           </span>
           <div className="flex gap-2">
