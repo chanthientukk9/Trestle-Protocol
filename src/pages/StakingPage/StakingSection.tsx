@@ -23,6 +23,8 @@ function StakingForm({ onSubmit }: { onSubmit: (value: number) => void }) {
   const isConnected = useCheckConnected();
   const { balance } = useBalanceOf();
 
+  const submitDisabled = amountValue <= 0 || Number(balance) <= 0;
+
   const handleChangeAmountValue: React.ChangeEventHandler<HTMLInputElement> = (
     e
   ) => {
@@ -30,7 +32,7 @@ function StakingForm({ onSubmit }: { onSubmit: (value: number) => void }) {
   };
 
   const handleSetMaxBalance = () => {
-    setAmountValue(Number(balance))
+    setAmountValue(Number(balance));
   };
 
   const handleSubmit = () => {
@@ -85,7 +87,7 @@ function StakingForm({ onSubmit }: { onSubmit: (value: number) => void }) {
         {!isConnected ? (
           <Button onClick={openConnectModal}>Connect Wallet</Button>
         ) : (
-          <Button disabled={amountValue <= 0} onClick={handleSubmit}>
+          <Button disabled={submitDisabled} onClick={handleSubmit}>
             Next
           </Button>
         )}
@@ -95,7 +97,10 @@ function StakingForm({ onSubmit }: { onSubmit: (value: number) => void }) {
 }
 
 export default function StakingSection() {
+  const [currentStep, setCurrentStep] = useState("amount");
+
   const handleStake = (value: number) => {
+    setCurrentStep("duration");
     return value;
   };
 
@@ -107,9 +112,11 @@ export default function StakingSection() {
             <div className="flex flex-col gap-2 justify-start items-start w-full h-full">
               <StakingSectionHeader />
               <hr className="my-3 border-gray-200 sm:mx-auto dark:border-white/5 lg:my-3 w-full" />
-              <StakingSteps activeStep={"amount"} />
+              <StakingSteps activeStep={currentStep} />
               <hr className="my-3 border-gray-200 sm:mx-auto dark:border-white/5 lg:my-3 w-full" />
-              <StakingForm onSubmit={handleStake} />
+              {currentStep === "amount" && (
+                <StakingForm onSubmit={handleStake} />
+              )}
             </div>
           </div>
         </BasicCard>
