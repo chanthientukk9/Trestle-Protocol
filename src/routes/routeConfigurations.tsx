@@ -3,6 +3,7 @@ import HomePage from "../pages/HomePage";
 import StatsPage from "../pages/StatsPage";
 import ComingSoonPage from "../pages/ComingSoonPage";
 import StakingPage from "../pages/StakingPage";
+import MyRewardsPage from "../pages/MyRewardsPage";
 
 const routeConfigurations = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const routeConfigurations = createBrowserRouter([
   },
   {
     path: "/my-rewards",
-    element: <ComingSoonPage />,
+    element: <MyRewardsPage />,
   },
 ]);
 
