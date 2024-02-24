@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import StatsPage from "../pages/StatsPage";
 import ComingSoonPage from "../pages/ComingSoonPage";
+import StakingPage from "../pages/StakingPage";
 
 const routeConfigurations = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const routeConfigurations = createBrowserRouter([
   },
   {
     path: "/staking",
-    element: <ComingSoonPage />,
+    element: <StakingPage />,
   },
   {
     path: "/my-rewards",

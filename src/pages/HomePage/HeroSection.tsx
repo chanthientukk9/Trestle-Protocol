@@ -50,8 +50,8 @@ function HeroSectionImage() {
 
 function HeroSection() {
   return (
-    <section className="flex items-center justify-center px-10 w-full max-w-[1300px] mx-auto">
-      <OutlineBox className="flex justify-center top-0 mb-0 md:mt-[240px] mt-[180px] lg:max-h-[760px] p-4 h-full md:mx-10 w-full">
+    <section className="flex items-center justify-center px-2 md:px-10 w-full max-w-[1300px] mx-auto">
+      <OutlineBox className="flex justify-center top-0 mb-0 md:mt-[240px] mt-[200px] lg:max-h-[760px] p-4 h-full md:mx-10 w-full">
         <HeroSectionLayout>
           <HeroSectionContent />
           <HeroSectionImage />

@@ -29,7 +29,7 @@ function BuyTrestleSectionMainContent() {
   }
 
   return (
-    <div className="flex w-full flex-col z-30 justify-center md:mt-0 h-full p-14 border-[1.5px] rounded-3xl border-white/20 order-last">
+    <div className="flex w-full flex-col z-30 justify-center md:mt-0 h-full p-6 md:p-14 border-[1.5px] rounded-3xl border-white/20 order-last">
       <div className="flex flex-col items-start gap-10 h-full justify-between">
         <div className="flex flex-col lg:flex-row items-center gap-10">
           <div className="flex flex-col gap-4 text-left items-start justify-start">
@@ -70,7 +70,7 @@ function BuyTrestleSection() {
   return (
     <section className="md:w-[95%] xl:w-full top-0 mb-0 md:mt-[100px] mt-[50px] mx-8 h-full max-w-[1200px] md:mx-auto">
       <OutlineBox className="h-full relative flex flex-col gap-6 justify-center p-3.5">
-        <div className="flex flex-col md:flex-row justify-center items-center w-full gap-6">
+        <div className="flex flex-col lg:flex-row justify-center items-center w-full gap-6">
           <BuyTrestleSectionImageContent />
           <BuyTrestleSectionMainContent />
         </div>
