@@ -10,6 +10,6 @@ export default function useBalanceOf() {
     args: [accounnt.address],
   });
   return {
-    balance: formatEther((result.data || 0) as BigNumberish),
+    balance: Number(formatEther((result.data || 0) as BigNumberish)),
   };
 }

@@ -2,6 +2,7 @@ import BasicCard from "../../components/BasicCard";
 import StakingSteps from "./StakingSteps";
 import { useState } from "react";
 import StakingForm from "./StakingForm";
+import DurationForm from "./DurationForm";
 
 function StakingSectionHeader() {
   return (
@@ -14,11 +15,15 @@ function StakingSectionHeader() {
 }
 
 export default function StakingSection() {
-  const [currentStep, setCurrentStep] = useState("amount");
+  const [currentStep, setCurrentStep] = useState(1);
 
   const handleStake = (value: number) => {
-    setCurrentStep("duration");
+    setCurrentStep(2);
     return value;
+  };
+
+  const handleBack = () => {
+    setCurrentStep(currentStep - 1);
   };
 
   return (
@@ -31,9 +36,8 @@ export default function StakingSection() {
               <hr className="my-3 border-gray-200 sm:mx-auto dark:border-white/5 lg:my-3 w-full" />
               <StakingSteps activeStep={currentStep} />
               <hr className="my-3 border-gray-200 sm:mx-auto dark:border-white/5 lg:my-3 w-full" />
-              {currentStep === "amount" && (
-                <StakingForm onSubmit={handleStake} />
-              )}
+              {currentStep === 1 && <StakingForm onSubmit={handleStake} />}
+              {currentStep === 2 && <DurationForm onBack={handleBack} />}
             </div>
           </div>
         </BasicCard>

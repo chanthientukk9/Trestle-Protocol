@@ -3,22 +3,22 @@ import IconClock from "../../components/IconClock";
 import IconAmount from "../../components/IconAmount";
 import StepList from "../../components/StepList";
 
-function StakingSteps({ activeStep }: { activeStep: string }) {
+function StakingSteps({ activeStep }: { activeStep: number }) {
   return (
     <StepList
       steps={[
         {
-          id: "amount",
+          id: 1,
           label: "Amount",
           icon: <IconAmount />,
         },
         {
-          id: "duration",
+          id: 2,
           label: "Duration",
           icon: <IconClock />,
         },
         {
-          id: "review",
+          id: 3,
           label: "Review",
           icon: <IconDocument />,
         },

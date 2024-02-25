@@ -6,9 +6,9 @@ function StepList({
   className,
   activeStep,
 }: {
-  steps: { id: string; label: string; icon: ReactNode | ReactElement }[];
+  steps: { id: number; label: string; icon: ReactNode | ReactElement }[];
   className?: string;
-  activeStep: string;
+  activeStep: number;
 }) {
   return (
     <ol
