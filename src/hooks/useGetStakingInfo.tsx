@@ -6,7 +6,7 @@ export default function useGetStakingInfo() {
     functionName: "totalStaked",
   });
   return {
-    totalStaked: formatEther((result.data || 0) as BigNumberish),
+    totalStaked: Number(formatEther((result.data || 0) as BigNumberish)),
     isLoading: result.isLoading,
     error: result.error
   };

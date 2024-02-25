@@ -6,7 +6,7 @@ export default function useGetTotalSupply({
 }: {
   tokenContract: ethers.Contract | null;
 }) {
-  const [totalSupply, setTotalSupply] = useState<number | null>(null);
+  const [totalSupply, setTotalSupply] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<unknown>(null);
 

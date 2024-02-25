@@ -7,16 +7,33 @@ import useGetTotalSupply from "../../hooks/useGetTotalSupply";
 import { numberWithCommas } from "../../utils";
 import useGetTokenPrice from "../../hooks/useGetTokenPrice";
 import useGetStakingInfo from "../../hooks/useGetStakingInfo";
-// import useGetTotalCirculating from "../../hooks/useGetTotalCirculating";
+import useGetBurntAmount from "../../hooks/useGetBurntAmount";
+import useGetDeployerAmount from "../../hooks/useGetDeployerAmount";
+import useGetVestingAmount from "../../hooks/useGetVestingAmount";
+import useGetTreasuryAmount from "../../hooks/useGetTreasuryAmount";
 
 function StatsPage() {
   const { contract: tokenContract } = useTokenContract();
-  const { totalSupply, isLoading: isLoadingTotalSupply } = useGetTotalSupply({
-    tokenContract,
-  });
+  const { totalSupply, isLoading: isLoadingTotalSupply } =
+    useGetTotalSupply({
+      tokenContract,
+    });
   const { totalStaked, isLoading: isLoadingStakingInfo } = useGetStakingInfo();
   const { tokenPrice, isLoading: isLoadingTokenPrice } = useGetTokenPrice();
-  // useGetTotalCirculating();
+  const { burntAmount, isLoading: isLoadingBurntAmount } = useGetBurntAmount();
+  const { deployerAmount, isLoading: isLoadingDeployerAmount } =
+    useGetDeployerAmount();
+  const { vestingAmount, isLoading: isLoadingVestingAmount } =
+    useGetVestingAmount();
+  const { treasuryAmount, isLoading: isLoadingTreasuryAmount } =
+    useGetTreasuryAmount();
+    const isLoadingCirculating =
+    isLoadingBurntAmount &&
+    isLoadingDeployerAmount &&
+    isLoadingVestingAmount &&
+    isLoadingTreasuryAmount;
+  const circulatingSupply =
+    totalSupply - burntAmount - deployerAmount - vestingAmount - treasuryAmount;
 
   return (
     <PageWrapper>
@@ -39,7 +56,14 @@ function StatsPage() {
                   : `$ ${Number.parseFloat(`${tokenPrice || 0}`).toFixed(5)}`
               }
             />
-            <Card title="Burnt Supply" value="768,786.317" />
+            <Card
+              title="Burnt Supply"
+              value={
+                isLoadingBurntAmount
+                  ? "Loading..."
+                  : `${numberWithCommas(Number(burntAmount.toFixed(3)))}`
+              }
+            />
           </div>
           <div className="flex md:flex-row flex-col justify-around gap-4 max-w-[1100px] mx-auto mt-5 md:mt-0">
             <div className="flex flex-col justify-center items-start w-full gap-4 md:gap-0">
@@ -49,13 +73,13 @@ function StatsPage() {
                     title: "Staked Supply",
                     value: isLoadingStakingInfo
                       ? "Loading..."
-                      : numberWithCommas(
-                          Number(Number.parseFloat(totalStaked).toFixed(3))
-                        ),
+                      : numberWithCommas(Number(totalStaked.toFixed(3))),
                   },
                   {
                     title: "Circulating Supply",
-                    value: "442,951,875.618",
+                    value: isLoadingCirculating
+                      ? "Loading..."
+                      : numberWithCommas(Number(circulatingSupply.toFixed(3))),
                   },
                 ]}
               />
