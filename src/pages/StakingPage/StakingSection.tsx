@@ -3,6 +3,13 @@ import StakingSteps from "./StakingSteps";
 import { useState } from "react";
 import StakingForm from "./StakingForm";
 import DurationForm from "./DurationForm";
+import ReviewForm from "./ReviewForm";
+
+type Duration = {
+  period: string;
+  APY: string;
+  rawDuration: number;
+};
 
 function StakingSectionHeader() {
   return (
@@ -17,15 +24,23 @@ function StakingSectionHeader() {
 export default function StakingSection() {
   const [currentStep, setCurrentStep] = useState(1);
   const [stakingAmount, setStakingAmount] = useState(0);
+  const [selectedDuration, setSelectedDuration] = useState<Duration>();
 
-  const handleStake = (value: number) => {
+  const handleSetStakingAmount = (value: number) => {
     setStakingAmount(value);
     setCurrentStep(2);
+  };
+
+  const handleSelectDuration = (duration: Duration) => {
+    setSelectedDuration(duration);
+    setCurrentStep(3);
   };
 
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
   };
+
+  const handleStake = () => {};
 
   return (
     <section className="relative flex flex-col justify-between md:top-0 md:pt-[160px] pt-[120px]">
@@ -37,10 +52,21 @@ export default function StakingSection() {
               <hr className="my-3 border-gray-200 sm:mx-auto dark:border-white/5 lg:my-3 w-full" />
               <StakingSteps activeStep={currentStep} />
               <hr className="my-3 border-gray-200 sm:mx-auto dark:border-white/5 lg:my-3 w-full" />
-              {currentStep === 1 && <StakingForm onSubmit={handleStake} />}
+              {currentStep === 1 && (
+                <StakingForm onSubmit={handleSetStakingAmount} />
+              )}
               {currentStep === 2 && (
                 <DurationForm
                   stakingAmount={stakingAmount}
+                  onSubmit={handleSelectDuration}
+                  onBack={handleBack}
+                />
+              )}
+              {currentStep === 3 && (
+                <ReviewForm
+                  stakingAmount={stakingAmount}
+                  duration={selectedDuration}
+                  onSubmit={handleStake}
                   onBack={handleBack}
                 />
               )}

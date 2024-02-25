@@ -12,9 +12,11 @@ type Duration = {
 
 export default function DurationForm({
   stakingAmount,
+  onSubmit,
   onBack,
 }: {
   stakingAmount: number;
+  onSubmit: (duration: Duration) => void;
   onBack?: () => void;
 }) {
   const [durations, setDurations] = useState<Duration[]>([]);
@@ -34,6 +36,10 @@ export default function DurationForm({
 
   const handleSelectDuration = (index: number) => () => {
     setSelectedDurationIndex(index);
+  };
+
+  const handleSubmit = () => {
+    onSubmit(durations[selectedDurationIndex]);
   };
 
   useEffect(() => {
@@ -82,8 +88,7 @@ export default function DurationForm({
                 Multiplier
               </h1>
               <h1 className="text-white text-sm font-quicksand font-semibold">
-                ~ {rewardAmount[index].toFixed(8)}{" "}
-                wTIA
+                ~ {rewardAmount[index].toFixed(8)} wTIA
               </h1>
             </div>
           </div>
@@ -97,7 +102,7 @@ export default function DurationForm({
       </div>
       {selectedDurationIndex !== 0 ? (
         <div className="flex flex-col gap-2 justify-start items-start w-full mt-5">
-          <Button>Next</Button>
+          <Button onClick={handleSubmit}>Next</Button>
         </div>
       ) : (
         <div className="flex flex-col gap-2 justify-start items-start w-full mt-5">
