@@ -1,10 +1,11 @@
 import { formatEther, BigNumberish } from "ethers";
 import useCallTokenContractMethod from "./useCallTokenContractMethod";
+import { VESTING_ADDRESS } from "../configs";
 
 export default function useGetVestingAmount() {
   const { result } = useCallTokenContractMethod({
     functionName: "balanceOf",
-    args: ["0xAFb979d9afAd1aD27C5eFf4E27226E3AB9e5dCC9"],
+    args: [VESTING_ADDRESS],
   });
 
   return {

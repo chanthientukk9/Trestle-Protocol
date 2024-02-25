@@ -1,7 +1,6 @@
+import { TOKEN_CONTRACT } from "../configs";
 import tokenABI from "../contracts/tokenABI.json";
 import { useReadContract } from "wagmi";
-
-const TOKEN_CONTRACT = "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD";
 
 export default function useCallTokenContractMethod({
   functionName,

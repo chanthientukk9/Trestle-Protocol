@@ -1,10 +1,11 @@
 import { formatEther, BigNumberish } from "ethers";
 import useCallTokenContractMethod from "./useCallTokenContractMethod";
+import { TREASURY_ADDRESS } from "../configs";
 
 export default function useGetTreasuryAmount() {
   const { result } = useCallTokenContractMethod({
     functionName: "balanceOf",
-    args: ["0x53DDA415Cc10822e00f5749670b0fe9713f44bF9"],
+    args: [TREASURY_ADDRESS],
   });
 
   return {
