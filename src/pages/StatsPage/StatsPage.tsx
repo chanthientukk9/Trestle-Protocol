@@ -6,13 +6,17 @@ import useTokenContract from "../../hooks/useTokenContract";
 import useGetTotalSupply from "../../hooks/useGetTotalSupply";
 import { numberWithCommas } from "../../utils";
 import useGetTokenPrice from "../../hooks/useGetTokenPrice";
+import useGetStakingInfo from "../../hooks/useGetStakingInfo";
+// import useGetTotalCirculating from "../../hooks/useGetTotalCirculating";
 
 function StatsPage() {
   const { contract: tokenContract } = useTokenContract();
   const { totalSupply, isLoading: isLoadingTotalSupply } = useGetTotalSupply({
     tokenContract,
   });
+  const { totalStaked, isLoading: isLoadingStakingInfo } = useGetStakingInfo();
   const { tokenPrice, isLoading: isLoadingTokenPrice } = useGetTokenPrice();
+  // useGetTotalCirculating();
 
   return (
     <PageWrapper>
@@ -43,7 +47,11 @@ function StatsPage() {
                 data={[
                   {
                     title: "Staked Supply",
-                    value: "137,031,036.73",
+                    value: isLoadingStakingInfo
+                      ? "Loading..."
+                      : numberWithCommas(
+                          Number(Number.parseFloat(totalStaked).toFixed(3))
+                        ),
                   },
                   {
                     title: "Circulating Supply",
