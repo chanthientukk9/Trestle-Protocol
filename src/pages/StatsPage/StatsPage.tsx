@@ -11,13 +11,13 @@ import useGetBurntAmount from "../../hooks/useGetBurntAmount";
 import useGetDeployerAmount from "../../hooks/useGetDeployerAmount";
 import useGetVestingAmount from "../../hooks/useGetVestingAmount";
 import useGetTreasuryAmount from "../../hooks/useGetTreasuryAmount";
+import useGetLiquidity from "../../hooks/useGetLiquidity";
 
 function StatsPage() {
   const { contract: tokenContract } = useTokenContract();
-  const { totalSupply, isLoading: isLoadingTotalSupply } =
-    useGetTotalSupply({
-      tokenContract,
-    });
+  const { totalSupply, isLoading: isLoadingTotalSupply } = useGetTotalSupply({
+    tokenContract,
+  });
   const { totalStaked, isLoading: isLoadingStakingInfo } = useGetStakingInfo();
   const { tokenPrice, isLoading: isLoadingTokenPrice } = useGetTokenPrice();
   const { burntAmount, isLoading: isLoadingBurntAmount } = useGetBurntAmount();
@@ -27,13 +27,18 @@ function StatsPage() {
     useGetVestingAmount();
   const { treasuryAmount, isLoading: isLoadingTreasuryAmount } =
     useGetTreasuryAmount();
-    const isLoadingCirculating =
+  const isLoadingCirculating =
     isLoadingBurntAmount &&
     isLoadingDeployerAmount &&
     isLoadingVestingAmount &&
     isLoadingTreasuryAmount;
   const circulatingSupply =
     totalSupply - burntAmount - deployerAmount - vestingAmount - treasuryAmount;
+  const {
+    totalLiquidity,
+    wTiaPrice,
+    isLoading: isLoadingLiquidity,
+  } = useGetLiquidity();
 
   return (
     <PageWrapper>
@@ -87,11 +92,17 @@ function StatsPage() {
                 data={[
                   {
                     title: "wTIA Liquidity",
-                    value: "$ 80,820.582",
+                    value: isLoadingLiquidity
+                      ? "Loading..."
+                      : `$ ${numberWithCommas(
+                          Number((totalLiquidity * wTiaPrice).toFixed(3))
+                        )}`,
                   },
                   {
                     title: "wTIA Price",
-                    value: "$ 15.56",
+                    value: isLoadingLiquidity
+                      ? "Loading..."
+                      : `$ ${numberWithCommas(Number(wTiaPrice.toFixed(2)))}`,
                   },
                 ]}
               />
