@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useGetDurationThresholds from "../../hooks/useGetDurationThresholds";
 import { formatTimeToLongStr } from "../../utils";
 import Button from "../../components/Button";
+import useGetStakingRewardsRatePerSec from "../../hooks/useGetStakingRewardsRatePerSec";
 
 type Duration = {
   period: string;
@@ -9,10 +10,27 @@ type Duration = {
   rawDuration: number;
 };
 
-export default function DurationForm({ onBack }: { onBack?: () => void }) {
+export default function DurationForm({
+  stakingAmount,
+  onBack,
+}: {
+  stakingAmount: number;
+  onBack?: () => void;
+}) {
   const [durations, setDurations] = useState<Duration[]>([]);
   const [selectedDurationIndex, setSelectedDurationIndex] = useState(0);
   const { durationThresholds } = useGetDurationThresholds();
+
+  const { rewardAmount } = useGetStakingRewardsRatePerSec({
+    stakingAmounts:
+      durations && stakingAmount
+        ? durations.map(() => Number(stakingAmount) * 1e18)
+        : [],
+    rawDurations:
+      durations && stakingAmount
+        ? durations.map((duration) => Number(duration.rawDuration))
+        : [],
+  });
 
   const handleSelectDuration = (index: number) => () => {
     setSelectedDurationIndex(index);
@@ -64,7 +82,8 @@ export default function DurationForm({ onBack }: { onBack?: () => void }) {
                 Multiplier
               </h1>
               <h1 className="text-white text-sm font-quicksand font-semibold">
-                ~ ? wTIA
+                ~ {rewardAmount[index].toFixed(8)}{" "}
+                wTIA
               </h1>
             </div>
           </div>

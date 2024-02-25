@@ -16,10 +16,11 @@ function StakingSectionHeader() {
 
 export default function StakingSection() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [stakingAmount, setStakingAmount] = useState(0);
 
   const handleStake = (value: number) => {
+    setStakingAmount(value);
     setCurrentStep(2);
-    return value;
   };
 
   const handleBack = () => {
@@ -37,7 +38,12 @@ export default function StakingSection() {
               <StakingSteps activeStep={currentStep} />
               <hr className="my-3 border-gray-200 sm:mx-auto dark:border-white/5 lg:my-3 w-full" />
               {currentStep === 1 && <StakingForm onSubmit={handleStake} />}
-              {currentStep === 2 && <DurationForm onBack={handleBack} />}
+              {currentStep === 2 && (
+                <DurationForm
+                  stakingAmount={stakingAmount}
+                  onBack={handleBack}
+                />
+              )}
             </div>
           </div>
         </BasicCard>
