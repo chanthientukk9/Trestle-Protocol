@@ -28,6 +28,7 @@ function StatsPage() {
   const { treasuryAmount, isLoading: isLoadingTreasuryAmount } =
     useGetTreasuryAmount();
   const isLoadingCirculating =
+    isLoadingTotalSupply &&
     isLoadingBurntAmount &&
     isLoadingDeployerAmount &&
     isLoadingVestingAmount &&
