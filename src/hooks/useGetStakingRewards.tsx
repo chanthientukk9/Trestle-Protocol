@@ -4,7 +4,7 @@ import { MULTIPLY_CONTRACT, STAKING_CONTRACT } from "../configs";
 import multiplyABI from "../contracts/multiplyABI.json";
 import stakingABI from "../contracts/stakingABI.json";
 
-export default function useGetStakingRewardsRatePerSec({
+export default function useGetStakingRewards({
   stakingAmounts,
   rawDurations,
 }: {

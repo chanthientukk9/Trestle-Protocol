@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useGetDurationThresholds from "../../hooks/useGetDurationThresholds";
 import { formatTimeToLongStr } from "../../utils";
 import Button from "../../components/Button";
-import useGetStakingRewardsRatePerSec from "../../hooks/useGetStakingRewardsRatePerSec";
+import useGetStakingRewards from "../../hooks/useGetStakingRewards";
 
 type Duration = {
   period: string;
@@ -21,9 +21,10 @@ export default function DurationForm({
 }) {
   const [durations, setDurations] = useState<Duration[]>([]);
   const [selectedDurationIndex, setSelectedDurationIndex] = useState(0);
-  const { durationThresholds } = useGetDurationThresholds();
+  const { durationThresholds, isLoading: isLoadingDurationThresholds } =
+    useGetDurationThresholds();
 
-  const { rewardAmount } = useGetStakingRewardsRatePerSec({
+  const { rewardAmount } = useGetStakingRewards({
     stakingAmounts:
       durations && stakingAmount
         ? durations.map(() => Number(stakingAmount) * 1e18)
@@ -61,6 +62,7 @@ export default function DurationForm({
         </h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full">
+        {isLoadingDurationThresholds && <div>Loading...</div>}
         {durations.map((duration, index) => (
           <div
             key={index}

@@ -1,7 +1,10 @@
+import { parseUnits } from "ethers";
 import logo from "../../assets/small-logo.svg";
 import Button from "../../components/Button";
 import useApproveToken from "../../hooks/useApproveToken";
 import useGetStakingAllowance from "../../hooks/useGetStakingAllowance";
+import useStake from "../../hooks/useStake";
+import { useEffect } from "react";
 
 type Duration = {
   period: string;
@@ -20,14 +23,25 @@ export default function ReviewForm({
   onSubmit: () => void;
   onBack?: () => void;
 }) {
-  const { allowance } = useGetStakingAllowance();
+  const { allowance, isLoading: isLoadingAllowance } = useGetStakingAllowance();
   const { approveStaking, isLoading: isApproving } = useApproveToken({
     amount: stakingAmount,
   });
+  const { stakeToken, isLoading: isStaking, isSuccess: isStakeSucess } = useStake();
 
   const handleSubmit = () => {
-    onSubmit();
+    stakeToken({
+      amount: parseUnits(stakingAmount.toString(), "wei"),
+      stakeTime: 0,
+      unstakeTime: duration?.rawDuration || 0,
+    });
   };
+
+  useEffect(() => {
+    if (isStakeSucess) {
+      onSubmit();
+    }
+  }, [isStakeSucess])
 
   return (
     <>
@@ -70,12 +84,14 @@ export default function ReviewForm({
         )}
       </div>
       <div className="flex flex-col gap-2 justify-start items-start w-full mt-5">
-        {allowance < Number(stakingAmount) ? (
-          <Button onClick={approveStaking}>
+        {isLoadingAllowance || allowance < Number(stakingAmount) ? (
+          <Button onClick={approveStaking} disabled={isApproving}>
             {isApproving ? "Approving..." : "APPROVE"}
           </Button>
         ) : (
-          <Button>STAKE</Button>
+          <Button onClick={handleSubmit} disabled={isStaking}>
+            {isStaking ? "Staking..." : "STAKE"}
+          </Button>
         )}
       </div>
       <div className="flex flex-col gap-2 justify-start items-start w-full mt-5">

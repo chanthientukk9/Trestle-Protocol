@@ -4,7 +4,7 @@ import tokenABI from "../contracts/tokenABI.json";
 import { parseUnits } from "ethers";
 
 export default function useApproveToken({ amount }: { amount: number }) {
-  const { data, writeContract } = useWriteContract();
+  const { data, isPending, writeContract } = useWriteContract();
 
   const approveStaking = () => {
     writeContract({
@@ -21,6 +21,6 @@ export default function useApproveToken({ amount }: { amount: number }) {
 
   return {
     approveStaking,
-    isLoading,
+    isLoading: isPending || isLoading,
   };
 }

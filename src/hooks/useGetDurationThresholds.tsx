@@ -7,12 +7,14 @@ export type Duration = {
 
 export default function useGetDurationThresholds(): {
   durationThresholds: Duration[];
+  isLoading: boolean;
 } {
   const { result } = useCallMultiplyContractMethod({
     functionName: "getDurationThresholds"
   })
 
   return {
-    durationThresholds: result.data as Duration[]
+    durationThresholds: result.data as Duration[],
+    isLoading: result.isLoading
   };
 }

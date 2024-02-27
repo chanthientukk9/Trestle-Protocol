@@ -4,6 +4,7 @@ import { useState } from "react";
 import StakingForm from "./StakingForm";
 import DurationForm from "./DurationForm";
 import ReviewForm from "./ReviewForm";
+import { useNavigate } from "react-router-dom";
 
 type Duration = {
   period: string;
@@ -25,6 +26,7 @@ export default function StakingSection() {
   const [currentStep, setCurrentStep] = useState(1);
   const [stakingAmount, setStakingAmount] = useState(0);
   const [selectedDuration, setSelectedDuration] = useState<Duration>();
+  const navigate = useNavigate();
 
   const handleSetStakingAmount = (value: number) => {
     setStakingAmount(value);
@@ -40,7 +42,9 @@ export default function StakingSection() {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleStake = () => {};
+  const handleStake = () => {
+    navigate("/my-rewards");
+  };
 
   return (
     <section className="relative flex flex-col justify-between md:top-0 md:pt-[160px] pt-[120px]">
