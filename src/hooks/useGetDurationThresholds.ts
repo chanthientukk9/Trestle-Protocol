@@ -1,4 +1,4 @@
-import useCallMultiplyContractMethod from "./useCallMultiplyContractMethod";
+import useReadMultiplyContract from "./useReadMultiplyContract";
 
 export type Duration = {
   threshold: string;
@@ -9,7 +9,7 @@ export default function useGetDurationThresholds(): {
   durationThresholds: Duration[];
   isLoading: boolean;
 } {
-  const { result } = useCallMultiplyContractMethod({
+  const { result } = useReadMultiplyContract({
     functionName: "getDurationThresholds"
   })
 

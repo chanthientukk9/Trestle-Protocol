@@ -1,8 +1,8 @@
-import { STAKING_CONTRACT } from "../configs";
-import stakingABI from "../contracts/stakingABI.json";
+import { MULTIPLY_CONTRACT } from "../configs";
+import multiplyABI from "../contracts/multiplyABI.json";
 import { useReadContract } from "wagmi";
 
-export default function useCallStakingContractMethod({
+export default function useReadMultiplyContract({
   functionName,
   args,
 }: {
@@ -10,8 +10,8 @@ export default function useCallStakingContractMethod({
   args?: readonly unknown[];
 }) {
   const result = useReadContract({
-    abi: stakingABI,
-    address: STAKING_CONTRACT,
+    abi: multiplyABI,
+    address: MULTIPLY_CONTRACT,
     functionName,
     args,
   });

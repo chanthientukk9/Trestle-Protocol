@@ -1,4 +1,4 @@
-import useCallStakingContractMethod from "./useCallStakingContractMethod";
+import useReadStakingContract from "./useReadStakingContract";
 import { useReadContract, useReadContracts } from "wagmi";
 import { MULTIPLY_CONTRACT, STAKING_CONTRACT } from "../configs";
 import multiplyABI from "../contracts/multiplyABI.json";
@@ -11,7 +11,7 @@ export default function useGetStakingRewards({
   stakingAmounts: number[];
   rawDurations: number[];
 }) {
-  const { result } = useCallStakingContractMethod({
+  const { result } = useReadStakingContract({
     functionName: "rewardRatePerSec",
   });
 

@@ -1,9 +1,9 @@
 import { formatEther, BigNumberish } from "ethers";
-import useCallTokenContractMethod from "./useCallTokenContractMethod";
+import useReadTokenContract from "./useReadTokenContract";
 import { DEPLOYER_ADDRESS } from "../configs";
 
 export default function useGetDeployerAmount() {
-  const { result } = useCallTokenContractMethod({
+  const { result } = useReadTokenContract({
     functionName: "balanceOf",
     args: [DEPLOYER_ADDRESS],
   });

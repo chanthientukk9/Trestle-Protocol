@@ -1,11 +1,11 @@
 import { useAccount } from "wagmi";
-import useCallTokenContractMethod from "./useCallTokenContractMethod";
+import useReadTokenContract from "./useReadTokenContract";
 import { formatEther } from "ethers";
 import { BigNumberish } from "ethers";
 
 export default function useBalanceOf() {
   const accounnt = useAccount();
-  const { result } = useCallTokenContractMethod({
+  const { result } = useReadTokenContract({
     functionName: "balanceOf",
     args: [accounnt.address],
   });

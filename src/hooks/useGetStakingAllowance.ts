@@ -1,10 +1,10 @@
 import { STAKING_CONTRACT } from "../configs";
-import useCallTokenContractMethod from "./useCallTokenContractMethod";
+import useReadTokenContract from "./useReadTokenContract";
 import useCurrentAccount from "./useCurrentAccount";
 
 export default function useGetStakingAllowance() {
   const account = useCurrentAccount();
-  const { result } = useCallTokenContractMethod({
+  const { result } = useReadTokenContract({
     functionName: "allowance",
     args: [account.address, STAKING_CONTRACT],
   });

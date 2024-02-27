@@ -2,7 +2,6 @@ import Card from "../../components/Card";
 import AddressListCard from "../../components/AddressListCard";
 import CardMedium from "../../components/CardMedium";
 import PageWrapper from "../../components/PageWrapper";
-import useTokenContract from "../../hooks/useTokenContract";
 import useGetTotalSupply from "../../hooks/useGetTotalSupply";
 import { numberWithCommas } from "../../utils";
 import useGetTokenPrice from "../../hooks/useGetTokenPrice";
@@ -12,12 +11,11 @@ import useGetDeployerAmount from "../../hooks/useGetDeployerAmount";
 import useGetVestingAmount from "../../hooks/useGetVestingAmount";
 import useGetTreasuryAmount from "../../hooks/useGetTreasuryAmount";
 import useGetLiquidity from "../../hooks/useGetLiquidity";
+import useBalanceOf from "../../hooks/useBalanceOf";
+import { useAccount } from "wagmi";
 
 function StatsPage() {
-  const { contract: tokenContract } = useTokenContract();
-  const { totalSupply, isLoading: isLoadingTotalSupply } = useGetTotalSupply({
-    tokenContract,
-  });
+  const { totalSupply, isLoading: isLoadingTotalSupply } = useGetTotalSupply();
   const { totalStaked, isLoading: isLoadingStakingInfo } = useGetStakingInfo();
   const { tokenPrice, isLoading: isLoadingTokenPrice } = useGetTokenPrice();
   const { burntAmount, isLoading: isLoadingBurntAmount } = useGetBurntAmount();
@@ -40,6 +38,12 @@ function StatsPage() {
     wTiaPrice,
     isLoading: isLoadingLiquidity,
   } = useGetLiquidity();
+
+  const { balance } = useBalanceOf()
+  const account = useAccount()
+
+  console.log('balance', balance)
+  console.log('account', account)
 
   return (
     <PageWrapper>

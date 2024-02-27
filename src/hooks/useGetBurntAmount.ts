@@ -1,9 +1,9 @@
 import { formatEther, BigNumberish } from "ethers";
-import useCallTokenContractMethod from "./useCallTokenContractMethod";
+import useReadTokenContract from "./useReadTokenContract";
 import { BURNT_ADDRESS } from "../configs";
 
 export default function useGetBurntAmount() {
-  const { result } = useCallTokenContractMethod({
+  const { result } = useReadTokenContract({
     functionName: "balanceOf",
     args: [BURNT_ADDRESS],
   });

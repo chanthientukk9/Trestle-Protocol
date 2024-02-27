@@ -1,9 +1,9 @@
 import { formatEther, BigNumberish } from "ethers";
-import useCallTokenContractMethod from "./useCallTokenContractMethod";
+import useReadTokenContract from "./useReadTokenContract";
 import { TREASURY_ADDRESS } from "../configs";
 
 export default function useGetTreasuryAmount() {
-  const { result } = useCallTokenContractMethod({
+  const { result } = useReadTokenContract({
     functionName: "balanceOf",
     args: [TREASURY_ADDRESS],
   });
