@@ -11,8 +11,6 @@ import useGetDeployerAmount from "../../hooks/useGetDeployerAmount";
 import useGetVestingAmount from "../../hooks/useGetVestingAmount";
 import useGetTreasuryAmount from "../../hooks/useGetTreasuryAmount";
 import useGetLiquidity from "../../hooks/useGetLiquidity";
-import useBalanceOf from "../../hooks/useBalanceOf";
-import { useAccount } from "wagmi";
 
 function StatsPage() {
   const { totalSupply, isLoading: isLoadingTotalSupply } = useGetTotalSupply();
