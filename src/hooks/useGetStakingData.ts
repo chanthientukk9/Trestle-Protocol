@@ -1,7 +1,7 @@
 import { formatEther, BigNumberish } from "ethers";
 import useReadStakingContract from "./useReadStakingContract";
 
-export default function useGetStakingInfo() {
+export default function useGetStakingData() {
   const { result } = useReadStakingContract({
     functionName: "totalStaked",
   });

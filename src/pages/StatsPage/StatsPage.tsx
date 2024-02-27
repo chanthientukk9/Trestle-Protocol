@@ -5,16 +5,16 @@ import PageWrapper from "../../components/PageWrapper";
 import useGetTotalSupply from "../../hooks/useGetTotalSupply";
 import { numberWithCommas } from "../../utils";
 import useGetTokenPrice from "../../hooks/useGetTokenPrice";
-import useGetStakingInfo from "../../hooks/useGetStakingInfo";
+import useGetStakingData from "../../hooks/useGetStakingData";
 import useGetBurntAmount from "../../hooks/useGetBurntAmount";
 import useGetDeployerAmount from "../../hooks/useGetDeployerAmount";
 import useGetVestingAmount from "../../hooks/useGetVestingAmount";
 import useGetTreasuryAmount from "../../hooks/useGetTreasuryAmount";
-import useGetLiquidity from "../../hooks/useGetLiquidity";
+import useGetLiquidityData from "../../hooks/useGetLiquidityData";
 
 function StatsPage() {
   const { totalSupply, isLoading: isLoadingTotalSupply } = useGetTotalSupply();
-  const { totalStaked, isLoading: isLoadingStakingInfo } = useGetStakingInfo();
+  const { totalStaked, isLoading: isLoadingStakingInfo } = useGetStakingData();
   const { tokenPrice, isLoading: isLoadingTokenPrice } = useGetTokenPrice();
   const { burntAmount, isLoading: isLoadingBurntAmount } = useGetBurntAmount();
   const { deployerAmount, isLoading: isLoadingDeployerAmount } =
@@ -35,7 +35,7 @@ function StatsPage() {
     totalLiquidity,
     wTiaPrice,
     isLoading: isLoadingLiquidity,
-  } = useGetLiquidity();
+  } = useGetLiquidityData();
 
   return (
     <PageWrapper>

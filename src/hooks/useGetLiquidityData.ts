@@ -18,7 +18,7 @@ const ETH_PRICE_QUERY = gql`
   }
 `;
 
-export default function useGetLiquidity() {
+export default function useGetLiquidityData() {
   const {
     loading: liquidityLoading,
     error: liquidityError,
