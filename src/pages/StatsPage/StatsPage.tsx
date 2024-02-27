@@ -39,12 +39,6 @@ function StatsPage() {
     isLoading: isLoadingLiquidity,
   } = useGetLiquidity();
 
-  const { balance } = useBalanceOf()
-  const account = useAccount()
-
-  console.log('balance', balance)
-  console.log('account', account)
-
   return (
     <PageWrapper>
       <div className="flex flex-col gap-10 w-full">
