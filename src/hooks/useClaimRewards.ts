@@ -2,23 +2,15 @@ import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { STAKING_CONTRACT } from "../configs";
 import stakingABI from "../contracts/stakingABI.json";
 
-export default function useStake() {
+export default function useClaimRewards() {
   const { data, isPending, error, writeContract } = useWriteContract();
 
-  const stakeToken = ({
-    amount,
-    stakeTime,
-    unstakeTime,
-  }: {
-    amount: bigint;
-    stakeTime: number;
-    unstakeTime: number;
-  }) => {
+  const claimRewards = (stackedNumber: number) => {
     writeContract({
       address: STAKING_CONTRACT,
       abi: stakingABI,
-      functionName: "stake",
-      args: [amount, stakeTime, unstakeTime],
+      functionName: "claimRewards",
+      args: [stackedNumber],
     });
   };
 
@@ -27,9 +19,9 @@ export default function useStake() {
   });
 
   return {
-    stakeToken,
+    claimRewards,
     isLoading: isPending || isLoading,
     isSuccess,
-    error,
+    error
   };
 }

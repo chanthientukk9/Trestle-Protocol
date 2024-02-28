@@ -53,32 +53,32 @@ export default function ReviewForm({
       <div className="flex justify-between gap-2 w-full flex-col md:flex-row">
         <div className="border-[1.5px] border-white/5 rounded-xl w-full bg-white/5">
           <div className="flex flex-col justify-between items-start w-full gap-2 p-4 bg-transparent">
-            <h1 className="text-white text-base font-dmSans mb-3">Amount</h1>
+            <h1 className="text-white text-base font-quicksand mb-3">Amount</h1>
             <div className="flex gap-2 rounded-xl px-6 py-2 mb-2 bg-white/5 w-fit-content">
               <img src={logo} alt="trestle" className="w-6 h-6 -ml-2" />
-              <h1 className="text-white text-left text-base font-dmSans">
+              <h1 className="text-white text-left text-base font-quicksand">
                 $TRESTLE
               </h1>
             </div>
-            <h1 className="text-white text-3xl font-dmSans font-semibold">
+            <h1 className="text-white text-3xl font-quicksand font-semibold">
               {stakingAmount}
             </h1>
-            <h1 className="text-white text-base font-dmSans">Tokens</h1>
+            <h1 className="text-white text-base font-quicksand">Tokens</h1>
           </div>
         </div>
         {stakingAmount !== 0 && (
           <div className="border-[1.5px] border-white/5 rounded-xl w-full bg-white/5">
             <div className="flex flex-col justify-between items-start w-full gap-2 p-4 bg-transparent">
-              <h1 className="text-white text-base font-dmSans mb-3">
+              <h1 className="text-white text-base font-quicksand mb-3">
                 Duration
               </h1>
-              <h1 className="text-white text-sm font-dmSans bg-white/5 py-2 px-4 rounded-xl mb-2">
+              <h1 className="text-white text-sm font-quicksand bg-white/5 py-2 px-4 rounded-xl mb-2">
                 {duration?.period || ""}
               </h1>
-              <h1 className="text-white text-3xl font-dmSans font-semibold">
+              <h1 className="text-white text-3xl font-quicksand font-semibold">
                 {Number(duration?.APY || 0) / 100} X
               </h1>
-              <h1 className="text-white text-base font-dmSans">Multiplier</h1>
+              <h1 className="text-white text-base font-quicksand">Multiplier</h1>
             </div>
           </div>
         )}

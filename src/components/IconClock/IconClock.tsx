@@ -1,4 +1,4 @@
-function IconClock() {
+function IconClock({ className }: { className?: string }) {
   return (
     <svg
       width="25"
@@ -6,7 +6,7 @@ function IconClock() {
       viewBox="0 0 25 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-5 h-5 me-2.5"
+      className={"w-5 h-5 me-2.5 " + className}
     >
       <g clipPath="url(#clip0_251_895)">
         <path
