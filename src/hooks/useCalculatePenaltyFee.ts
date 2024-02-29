@@ -6,7 +6,7 @@ export default function useCalculatePenaltyFee({
   unstakingAmount,
   duration,
 }: {
-  unstakingAmount: number;
+  unstakingAmount: bigint;
   duration: number;
 }) {
   const { result } = useReadPenaltyFeeContract({

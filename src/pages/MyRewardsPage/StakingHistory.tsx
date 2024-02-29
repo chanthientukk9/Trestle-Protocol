@@ -22,6 +22,7 @@ export default function StakingHistory() {
   const [unstakeAmount, setUnstakeAmount] = useState(0);
 
   const isConnected = useCheckConnected();
+
   const { stakingList, isLoading: isLoadingStakingList } =
     useGetUserStakingData();
   const { rewards } = useGetUserStakingRewards({
@@ -37,9 +38,10 @@ export default function StakingHistory() {
   });
   const { penaltyFeeGroup } = useGetPenaltyFeeGroup({ stakedNumber });
   const { penaltyFee } = useCalculatePenaltyFee({
-    unstakingAmount: 10,
+    unstakingAmount: parseUnits(`${unstakeAmount}`, "wei"),
     duration: stakingList[stakedNumber]?.duration || 0,
   });
+  
   const { isLoading: isStaking, unstakeToken } = useUnstake();
 
   const handleOpenUnstakeForm =
