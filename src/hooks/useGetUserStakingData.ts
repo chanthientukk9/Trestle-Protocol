@@ -18,7 +18,7 @@ export default function useGetUserStakingData(): {
     args: [accounnt.address],
   });
 
-  usePushError(result.error);
+  usePushError(accounnt.isConnected ? result.error : null);
 
   return {
     stakingList: (result.data || []) as StakeItem[],

@@ -30,7 +30,7 @@ export default function useGetUserStakingRewards({
         Number(formatUnits(Number(reward.result), "gwei"))
       );
 
-  usePushError(results.error);
+  usePushError(accounnt.isConnected ? results.error : null);
 
   return {
     rewards,
