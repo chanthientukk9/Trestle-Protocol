@@ -13,7 +13,7 @@ export default function useReadTokenContract({
     abi: tokenABI,
     address: TOKEN_CONTRACT,
     functionName,
-    args
+    args,
   });
 
   return {

@@ -9,7 +9,7 @@ export default function usePushError(error?: Error | null) {
       if (error.message.includes("User rejected the request")) {
         pushError(`${error.name}: User rejected the request`);
       } else {
-        pushError(`${error.name}: error.message`);
+        pushError(`${error.name}: ${error.message}`);
       }
     }
   }, [error, pushError]);

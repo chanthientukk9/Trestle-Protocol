@@ -11,7 +11,7 @@ export default function useBalanceOf() {
     args: [accounnt.address],
   });
 
-  usePushError(result.error);
+  usePushError(accounnt.isConnected ? result.error : null);
 
   return {
     balance: Number(formatEther((result.data || 0) as BigNumberish)),
