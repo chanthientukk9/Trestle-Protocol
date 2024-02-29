@@ -1,5 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 import { useEffect, useState } from "react";
+import usePushError from "./usePushError";
 
 const LIQUIDITY_QUERY = gql`
   query tokens($tokenAddress: Bytes!) {
@@ -40,6 +41,8 @@ export default function useGetLiquidityData() {
 
   const [totalLiquidity, setTotalLiquidity] = useState(0);
   const [wTiaPrice, setWTiaPrice] = useState(0);
+
+  usePushError(liquidityError || ethPriceError);
 
   useEffect(() => {
     if (liquidityData) {

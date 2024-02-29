@@ -1,6 +1,7 @@
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { STAKING_CONTRACT } from "../configs";
 import stakingABI from "../contracts/stakingABI.json";
+import usePushError from "./usePushError";
 
 export default function useClaimRewards() {
   const { data, isPending, error, writeContract } = useWriteContract();
@@ -14,14 +15,20 @@ export default function useClaimRewards() {
     });
   };
 
-  const { isLoading, isSuccess } = useWaitForTransactionReceipt({
+  const {
+    isLoading,
+    isSuccess,
+    error: receiptError,
+  } = useWaitForTransactionReceipt({
     hash: data,
   });
+
+  usePushError(error || receiptError);
 
   return {
     claimRewards,
     isLoading: isPending || isLoading,
     isSuccess,
-    error
+    error: error || receiptError,
   };
 }

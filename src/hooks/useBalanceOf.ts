@@ -2,6 +2,7 @@ import { useAccount } from "wagmi";
 import useReadTokenContract from "./useReadTokenContract";
 import { formatEther } from "ethers";
 import { BigNumberish } from "ethers";
+import usePushError from "./usePushError";
 
 export default function useBalanceOf() {
   const accounnt = useAccount();
@@ -9,7 +10,12 @@ export default function useBalanceOf() {
     functionName: "balanceOf",
     args: [accounnt.address],
   });
+
+  usePushError(result.error);
+
   return {
     balance: Number(formatEther((result.data || 0) as BigNumberish)),
+    isLoading: result.isLoading,
+    error: result.error,
   };
 }

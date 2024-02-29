@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import usePushError from "./usePushError";
 
 const COINGECKO_ENDPOINT = "https://api.coingecko.com/api/v3/simple/price";
 const CG_DEMO_API_KEY = "CG-mzdxLhAZmdhJ1RKi7cQhxd2i";
@@ -9,7 +10,9 @@ const PRICE_CURRENCY = "usd";
 export default function useGetTokenPrice() {
   const [tokenPrice, setTokenPrice] = useState(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<unknown>(null);
+  const [error, setError] = useState<Error | null>(null);
+
+  usePushError(error);
 
   useEffect(() => {
     const loadTokenPrice = async () => {
@@ -22,9 +25,9 @@ export default function useGetTokenPrice() {
         const price = res.data?.trestle?.usd;
         setTokenPrice(price);
         setIsLoading(false);
-      } catch (err) {
+      } catch (err: unknown) {
         setIsLoading(false);
-        setError(err);
+        setError(err as Error);
       }
     };
 
@@ -34,6 +37,6 @@ export default function useGetTokenPrice() {
   return {
     tokenPrice,
     isLoading,
-    error
-  }
+    error,
+  };
 }

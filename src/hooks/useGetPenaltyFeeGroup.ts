@@ -1,3 +1,4 @@
+import usePushError from "./usePushError";
 import useReadPenaltyFeeContract from "./useReadPenaltyFeeContract";
 
 export default function useGetPenaltyFeeGroup({
@@ -9,6 +10,8 @@ export default function useGetPenaltyFeeGroup({
     functionName: "penaltyFeePerGroup",
     args: [stakedNumber],
   });
+
+  usePushError(result.error);
 
   return {
     penaltyFeeGroup: result.data as number,

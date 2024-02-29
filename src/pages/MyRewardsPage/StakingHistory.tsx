@@ -117,7 +117,7 @@ export default function StakingHistory() {
               ) : (
                 <div className="flex flex-col w-full h-40 items-center justify-center">
                   <h1 className="text-white text-lg font-quicksand">
-                    {isLoadingStakingList
+                    {isConnected && isLoadingStakingList
                       ? "Loading staking activities..."
                       : "Connect your wallet to view your staking activity"}
                   </h1>

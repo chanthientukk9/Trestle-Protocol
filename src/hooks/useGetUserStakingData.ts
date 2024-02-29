@@ -1,14 +1,15 @@
 import { useAccount } from "wagmi";
 import useReadStakingContract from "./useReadStakingContract";
+import usePushError from "./usePushError";
 
 export type StakeItem = {
   stakedAmount: bigint;
   duration: number;
   minimumStakeTimestamp: number;
-}
+};
 
 export default function useGetUserStakingData(): {
-  stakingList: StakeItem[],
+  stakingList: StakeItem[];
   isLoading: boolean;
 } {
   const accounnt = useAccount();
@@ -17,8 +18,10 @@ export default function useGetUserStakingData(): {
     args: [accounnt.address],
   });
 
+  usePushError(result.error);
+
   return {
     stakingList: (result.data || []) as StakeItem[],
-    isLoading: result.isLoading
+    isLoading: result.isLoading,
   };
 }

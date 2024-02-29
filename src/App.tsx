@@ -5,6 +5,9 @@ import { WagmiProvider } from "wagmi";
 import { mainnet } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ErrorContext, ErrorContextValue } from "./contexts/errorContext";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const config = getDefaultConfig({
   appName: "RainbowKit demo",
@@ -20,12 +23,22 @@ const apolloClient = new ApolloClient({
 const queryClient = new QueryClient();
 
 function App() {
+  const [error, setError] = useState<ErrorContextValue>();
+
+  const handleToast = (errorMessage: string) => {
+    toast(errorMessage, { type: "error" });
+  };
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider modalSize="compact">
           <ApolloProvider client={apolloClient}>
-            <RouterProvider router={routeConfigurations} />
+            <ErrorContext.Provider
+              value={{ error, setError, pushError: handleToast }}
+            >
+              <RouterProvider router={routeConfigurations} />
+            </ErrorContext.Provider>
           </ApolloProvider>
         </RainbowKitProvider>
       </QueryClientProvider>

@@ -2,6 +2,7 @@ import { useAccount, useReadContracts } from "wagmi";
 import { STAKING_CONTRACT } from "../configs";
 import stakingABI from "../contracts/stakingABI.json";
 import { formatUnits } from "ethers";
+import usePushError from "./usePushError";
 
 export default function useGetUserStakingRewards({
   stakingListLength,
@@ -29,8 +30,11 @@ export default function useGetUserStakingRewards({
         Number(formatUnits(Number(reward.result), "gwei"))
       );
 
+  usePushError(results.error);
+
   return {
     rewards,
     isLoading: results.isLoading,
+    error: results.error,
   };
 }

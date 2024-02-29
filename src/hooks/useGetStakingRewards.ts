@@ -3,6 +3,7 @@ import { useReadContract, useReadContracts } from "wagmi";
 import { MULTIPLY_CONTRACT, STAKING_CONTRACT } from "../configs";
 import multiplyABI from "../contracts/multiplyABI.json";
 import stakingABI from "../contracts/stakingABI.json";
+import usePushError from "./usePushError";
 
 export default function useGetStakingRewards({
   stakingAmounts,
@@ -47,9 +48,11 @@ export default function useGetStakingRewards({
       (amounts[index] / Number(formatedWeighted))
   );
 
+  usePushError(result.error || results.error);
+
   return {
     rewardAmount,
-    isLoading: result.isLoading,
+    isLoading: result.isLoading || results.isLoading,
     error: result.error,
   };
 }
