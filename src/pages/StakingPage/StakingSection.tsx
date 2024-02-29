@@ -48,8 +48,8 @@ export default function StakingSection() {
 
   return (
     <section className="relative flex flex-col justify-between md:top-0 md:pt-[160px] pt-[120px]">
-      <div className="flex flex-col lg:flex-row justify-between w-full gap-6 max-w-[760px] mx-auto px-7 lg:px-4">
-        <BasicCard className="max-w-[900px] md:mt-10 bg-[#0F1015]/90 border-white/5">
+      <div className="flex flex-col lg:flex-row justify-between w-full gap-6 max-w-[760px] mx-auto px-6 md:px-7 lg:px-4">
+        <BasicCard className="max-w-[900px] md:mt-10 bg-[#0F1015]/90 border-white/5 px-6 md:px-10">
           <div className="flex flex-col gap-8 justify-center items-start w-full">
             <div className="flex flex-col gap-2 justify-start items-start w-full h-full">
               <StakingSectionHeader />
