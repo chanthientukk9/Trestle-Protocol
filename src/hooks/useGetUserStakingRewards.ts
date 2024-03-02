@@ -27,7 +27,7 @@ export default function useGetUserStakingRewards({
   const rewards = !results.data
     ? []
     : results.data.map((reward) =>
-        Number(formatUnits(Number(reward.result), "gwei"))
+        Number(formatUnits(Number(reward.result || 0), "gwei"))
       );
 
   usePushError(accounnt.isConnected ? results.error : null);

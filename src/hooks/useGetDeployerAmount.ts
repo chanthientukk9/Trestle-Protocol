@@ -1,4 +1,4 @@
-import { formatEther, BigNumberish } from "ethers";
+import { formatUnits } from "ethers";
 import useReadTokenContract from "./useReadTokenContract";
 import { DEPLOYER_ADDRESS } from "../configs";
 import usePushError from "./usePushError";
@@ -12,7 +12,7 @@ export default function useGetDeployerAmount() {
   usePushError(result.error);
 
   return {
-    deployerAmount: Number(formatEther((result.data || 0) as BigNumberish)),
+    deployerAmount: Number(formatUnits(`${result.data || 0}`, 18)),
     isLoading: result.isLoading,
     error: result.error,
   };

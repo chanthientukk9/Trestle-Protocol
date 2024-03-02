@@ -55,7 +55,7 @@ function StatsPage() {
               value={
                 isLoadingTokenPrice
                   ? "Loading..."
-                  : `$ ${Number.parseFloat(`${tokenPrice || 0}`).toFixed(5)}`
+                  : `$ ${Number(tokenPrice || 0).toFixed(5)}`
               }
             />
             <Card

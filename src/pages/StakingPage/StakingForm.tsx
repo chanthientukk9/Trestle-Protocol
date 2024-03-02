@@ -15,7 +15,7 @@ export default function StakingForm({
   const isConnected = useCheckConnected();
   const { balance } = useBalanceOf();
 
-  const submitDisabled = amountValue <= 0 || Number(balance) <= 0;
+  const submitDisabled = amountValue <= 0 || balance <= 0;
 
   const handleChangeAmountValue: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -24,7 +24,7 @@ export default function StakingForm({
   };
 
   const handleSetMaxBalance = () => {
-    setAmountValue(Number(balance));
+    setAmountValue(balance);
   };
 
   const handleSubmit = () => {

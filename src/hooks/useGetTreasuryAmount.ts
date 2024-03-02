@@ -1,4 +1,4 @@
-import { formatEther, BigNumberish } from "ethers";
+import { formatUnits } from "ethers";
 import useReadTokenContract from "./useReadTokenContract";
 import { TREASURY_ADDRESS } from "../configs";
 import usePushError from "./usePushError";
@@ -12,7 +12,7 @@ export default function useGetTreasuryAmount() {
   usePushError(result.error);
 
   return {
-    treasuryAmount: Number(formatEther((result.data || 0) as BigNumberish)),
+    treasuryAmount: Number(formatUnits(`${result.data || 0}`, 18)),
     isLoading: result.isLoading,
     error: result.error,
   };

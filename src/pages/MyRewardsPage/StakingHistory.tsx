@@ -1,4 +1,3 @@
-import { formatUnits, parseUnits } from "ethers";
 import BasicCard from "../../components/BasicCard";
 import useCheckConnected from "../../hooks/useCheckConntected";
 import useGetUserStakingData from "../../hooks/useGetUserStakingData";
@@ -29,19 +28,15 @@ export default function StakingHistory() {
     stakingListLength: stakingList.length,
   });
   const { rewardAmount } = useGetStakingRewards({
-    stakingAmounts: (stakingList || []).map((staking) =>
-      Number(staking.stakedAmount)
-    ),
-    rawDurations: (stakingList || []).map((staking) =>
-      Number(staking?.duration || 0)
-    ),
+    stakingAmounts: (stakingList || []).map((staking) => staking.stakedAmount),
+    rawDurations: (stakingList || []).map((staking) => staking?.duration),
   });
   const { penaltyFeeGroup } = useGetPenaltyFeeGroup({ stakedNumber });
   const { penaltyFee } = useCalculatePenaltyFee({
-    unstakingAmount: parseUnits(`${unstakeAmount}`, "wei"),
-    duration: stakingList[stakedNumber]?.duration || 0,
+    unstakingAmount: unstakeAmount,
+    duration: stakingList[stakedNumber]?.duration,
   });
-  
+
   const { isLoading: isStaking, unstakeToken } = useUnstake();
 
   const handleOpenUnstakeForm =
@@ -62,14 +57,12 @@ export default function StakingHistory() {
   };
 
   const handleSetMaxAmount = () => {
-    setUnstakeAmount(
-      Number(formatUnits(stakingList[stakedNumber]?.stakedAmount || 0, "ether"))
-    );
+    setUnstakeAmount(stakingList[stakedNumber]?.stakedAmount || 0);
   };
 
   const handleUnstake = () => {
     unstakeToken({
-      amount: parseUnits(`${unstakeAmount}`, "wei"),
+      amount: unstakeAmount,
       stakedNumber,
     });
   };
@@ -98,10 +91,8 @@ export default function StakingHistory() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full">
                   {stakingList.map(
                     (staking, index) =>
-                      (Number(
-                        formatUnits(staking?.stakedAmount || 0, "ether")
-                      ) > 1e-10 ||
-                        Number(rewards[index] || 0) > 1e-4) && (
+                      (staking?.stakedAmount > 1e-10 ||
+                        rewards[index] > 1e-4) && (
                         <StakedItemCard
                           key={index}
                           staking={staking}
@@ -143,13 +134,7 @@ export default function StakingHistory() {
         </div>
         <hr className="my-5 border-gray-200 w-full sm:mx-auto dark:border-white/5" />
         <TokenInput
-          balance={
-            isNaN(Number(stakingList[stakedNumber]?.stakedAmount || 0) / 1e18)
-              ? "0.00"
-              : (
-                  Number(stakingList[stakedNumber]?.stakedAmount || 0) / 1e18
-                ).toLocaleString()
-          }
+          balance={stakingList[stakedNumber]?.stakedAmount}
           value={unstakeAmount}
           onChange={handleChangeUnstakeAmount}
           onSetMax={handleSetMaxAmount}
@@ -167,8 +152,8 @@ export default function StakingHistory() {
           </div>
           <h1 className="text-white text-lg font-quicksand text-right whitespace-nowrap">
             {new Date(
-              (Number(stakingList[stakedNumber]?.minimumStakeTimestamp || 0) +
-                Number(stakingList[stakedNumber]?.duration || 0)) *
+              (stakingList[stakedNumber]?.minimumStakeTimestamp +
+                stakingList[stakedNumber]?.duration) *
                 1e3
             ).toLocaleString()}
           </h1>
@@ -177,7 +162,7 @@ export default function StakingHistory() {
           <>
             <h1 className="text-white text-lg font-quicksand font-light my-5 text-left self-start">
               Unstaking your $TRESTLE before due time will incur a penalty fee
-              of {Number(penaltyFeeGroup) / 100}%
+              of {penaltyFeeGroup / 100}%
             </h1>
             <div className="flex justify-between text-lext w-full">
               <div className="flex justify-start items-center gap-2 text-lext w-full">
@@ -187,13 +172,8 @@ export default function StakingHistory() {
                 </h1>
               </div>
               <h1 className="text-red-400 text-lg font-quicksand text-right whitespace-nowrap">
-                {
-                  ((Number(penaltyFee) > 0
-                    ? Number(penaltyFee) / 1e18
-                    : 0
-                  ).toLocaleString(),
-                  " $TRESTLE")
-                }
+                {penaltyFee > 0 ? penaltyFee : 0}
+                {" $TRESTLE"}
               </h1>
             </div>
           </>

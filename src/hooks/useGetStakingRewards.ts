@@ -4,6 +4,8 @@ import { MULTIPLY_CONTRACT, STAKING_CONTRACT } from "../configs";
 import multiplyABI from "../contracts/multiplyABI.json";
 import stakingABI from "../contracts/stakingABI.json";
 import usePushError from "./usePushError";
+import { formatUnits, parseUnits } from "ethers";
+import { BigNumberish } from "ethers";
 
 export default function useGetStakingRewards({
   stakingAmounts,
@@ -16,19 +18,21 @@ export default function useGetStakingRewards({
     functionName: "rewardRatePerSec",
   });
 
-  const rewardRatePerSec = Number(result.data || 0) / 1e9;
+  const rewardRatePerSec = Number(formatUnits(`${result.data || 0}`, "gwei"));
 
   const results = useReadContracts({
     contracts: stakingAmounts.map((stakingAmount, index) => ({
       address: MULTIPLY_CONTRACT,
       abi: multiplyABI,
       functionName: "applyMultiplier",
-      args: [BigInt(stakingAmount), BigInt(rawDurations[index])],
+      args: [parseUnits(`${stakingAmount}`, "wei"), rawDurations[index]],
     })) as readonly unknown[],
   });
 
   const amounts = results?.data
-    ? (results?.data || []).map((amount) => Number(amount.result) / 1e18)
+    ? (results?.data || []).map((amount) =>
+        Number(formatUnits(amount.result as BigNumberish, "ether"))
+      )
     : [];
 
   const { data: totalWeightedStake } = useReadContract({
@@ -37,15 +41,15 @@ export default function useGetStakingRewards({
     functionName: "totalWeightedStake",
   });
 
-  const formatedWeighted = totalWeightedStake
-    ? Number(totalWeightedStake) / 1e18
-    : 0;
+  const formatedWeighted = Number(
+    formatUnits(`${totalWeightedStake || 0}`, "ether")
+  );
 
   const rewardAmount = stakingAmounts.map(
     (_, index) =>
       rewardRatePerSec *
       Number(rawDurations[index]) *
-      (amounts[index] / Number(formatedWeighted))
+      (amounts[index] / formatedWeighted)
   );
 
   usePushError(result.error || results.error);

@@ -6,8 +6,8 @@ export default function TokenInput({
   onChange,
   onSetMax,
 }: {
-  balance: number | string;
-  value: number | string;
+  balance: number;
+  value: number;
   onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
   onSetMax: () => void;
 }) {

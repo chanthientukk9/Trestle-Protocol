@@ -7,7 +7,6 @@ import IconChartLine from "../../components/IconChartLine";
 import IconTimeLeft from "../../components/IconTimeLeft";
 import Button from "../../components/Button";
 import { StakeItem } from "../../hooks/useGetUserStakingData";
-import { formatUnits } from "ethers";
 import useClaimRewards from "../../hooks/useClaimRewards";
 
 export default function StakedItemCard({
@@ -55,7 +54,7 @@ export default function StakedItemCard({
               <p className="text-white text-base font-quicksand">Staked</p>
             </div>
             <p className="text-white text-base font-quicksand">
-              {formatUnits(staking?.stakedAmount || 0, "ether")}
+              {staking?.stakedAmount || 0}
             </p>
           </div>
           <div className="flex flex-row gap-2 justify-between items-center w-full">
@@ -76,7 +75,7 @@ export default function StakedItemCard({
             </div>
             <p className="text-white text-sm font-quicksand text-right">
               {new Date(
-                Number(staking.minimumStakeTimestamp || 0) * 1000
+                (staking.minimumStakeTimestamp || 0) * 1000
               ).toLocaleString()}
             </p>
           </div>
@@ -110,11 +109,10 @@ export default function StakedItemCard({
               <p className="text-white text-base font-quicksand">Time Left</p>
             </div>
             <p className="text-white text-sm font-quicksand text-right w-[40%]">
-              {Number(staking?.minimumStakeTimestamp || 0) -
-                Math.floor(currentTime) >
+              {(staking?.minimumStakeTimestamp || 0) - Math.floor(currentTime) >
               0
                 ? formatTimeToLongStr(
-                    Number(staking?.minimumStakeTimestamp || 0) -
+                    (staking?.minimumStakeTimestamp || 0) -
                       Math.floor(currentTime)
                   )
                 : "0 seconds"}
@@ -124,7 +122,7 @@ export default function StakedItemCard({
             <Button onClick={handleClaimRewards} disabled={isClaiming}>
               {isClaiming ? "Claiming..." : "Claim"}
             </Button>
-            {staking && Number(staking?.stakedAmount || 0) / 1e18 > 1e-10 ? (
+            {staking && (staking.stakedAmount || 0) > 1e-10 ? (
               <Button onClick={handleOpenUnstakeForm}>Unstake</Button>
             ) : (
               <Button>Unstaked</Button>

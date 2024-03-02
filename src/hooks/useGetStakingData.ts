@@ -1,4 +1,4 @@
-import { formatEther, BigNumberish } from "ethers";
+import { formatUnits } from "ethers";
 import useReadStakingContract from "./useReadStakingContract";
 import usePushError from "./usePushError";
 
@@ -10,7 +10,7 @@ export default function useGetStakingData() {
   usePushError(result.error);
 
   return {
-    totalStaked: Number(formatEther((result.data || 0) as BigNumberish)),
+    totalStaked: Number(formatUnits(`${result.data || 0}`, 18)),
     isLoading: result.isLoading,
     error: result.error
   };

@@ -14,7 +14,7 @@ export default function useGetPenaltyFeeGroup({
   usePushError(result.error);
 
   return {
-    penaltyFeeGroup: result.data as number,
+    penaltyFeeGroup: Number(result.data),
     isLoading: result.isLoading,
     error: result.error,
   };

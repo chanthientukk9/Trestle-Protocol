@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 type Duration = {
   period: string;
-  APY: string;
+  APY: number;
   rawDuration: number;
 };
 

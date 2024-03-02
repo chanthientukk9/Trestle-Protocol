@@ -1,4 +1,3 @@
-import { parseUnits } from "ethers";
 import logo from "../../assets/small-logo.svg";
 import Button from "../../components/Button";
 import useApproveToken from "../../hooks/useApproveToken";
@@ -8,7 +7,7 @@ import { useEffect } from "react";
 
 type Duration = {
   period: string;
-  APY: string;
+  APY: number;
   rawDuration: number;
 };
 
@@ -27,11 +26,15 @@ export default function ReviewForm({
   const { approveStaking, isLoading: isApproving } = useApproveToken({
     amount: stakingAmount,
   });
-  const { stakeToken, isLoading: isStaking, isSuccess: isStakeSucess } = useStake();
+  const {
+    stakeToken,
+    isLoading: isStaking,
+    isSuccess: isStakeSucess,
+  } = useStake();
 
   const handleSubmit = () => {
     stakeToken({
-      amount: parseUnits(stakingAmount.toString(), "wei"),
+      amount: stakingAmount,
       stakeTime: 0,
       unstakeTime: duration?.rawDuration || 0,
     });
@@ -41,7 +44,7 @@ export default function ReviewForm({
     if (isStakeSucess) {
       onSubmit();
     }
-  }, [isStakeSucess])
+  }, [isStakeSucess]);
 
   return (
     <>
@@ -76,15 +79,17 @@ export default function ReviewForm({
                 {duration?.period || ""}
               </h1>
               <h1 className="text-white text-3xl font-quicksand font-semibold">
-                {Number(duration?.APY || 0) / 100} X
+                {(duration?.APY || 0) / 100} X
               </h1>
-              <h1 className="text-white text-base font-quicksand">Multiplier</h1>
+              <h1 className="text-white text-base font-quicksand">
+                Multiplier
+              </h1>
             </div>
           </div>
         )}
       </div>
       <div className="flex flex-col gap-2 justify-start items-start w-full mt-5">
-        {isLoadingAllowance || allowance < Number(stakingAmount) ? (
+        {isLoadingAllowance || allowance < stakingAmount ? (
           <Button onClick={approveStaking} disabled={isApproving}>
             {isApproving ? "Approving..." : "APPROVE"}
           </Button>

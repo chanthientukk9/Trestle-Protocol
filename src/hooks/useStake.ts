@@ -2,6 +2,7 @@ import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { STAKING_CONTRACT } from "../configs";
 import stakingABI from "../contracts/stakingABI.json";
 import usePushError from "./usePushError";
+import { parseUnits } from "viem";
 
 export default function useStake() {
   const { data, isPending, error, writeContract } = useWriteContract();
@@ -11,7 +12,7 @@ export default function useStake() {
     stakeTime,
     unstakeTime,
   }: {
-    amount: bigint;
+    amount: number;
     stakeTime: number;
     unstakeTime: number;
   }) => {
@@ -19,7 +20,7 @@ export default function useStake() {
       address: STAKING_CONTRACT,
       abi: stakingABI,
       functionName: "stake",
-      args: [amount, stakeTime, unstakeTime],
+      args: [parseUnits(`${amount}`, 18), stakeTime, unstakeTime],
     });
   };
 

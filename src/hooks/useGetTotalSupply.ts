@@ -1,4 +1,4 @@
-import { formatEther } from "ethers";
+import { formatUnits } from "ethers";
 import useReadTokenContract from "./useReadTokenContract";
 import usePushError from "./usePushError";
 
@@ -10,7 +10,7 @@ export default function useGetTotalSupply() {
   usePushError(result.error);
 
   return {
-    totalSupply: Number(formatEther(`${result.data || 0}`)),
+    totalSupply: Number(formatUnits(`${result.data || 0}`, 18)),
     isLoading: result.isLoading,
     error: result.error,
   };

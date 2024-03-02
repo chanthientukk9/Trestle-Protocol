@@ -1,3 +1,4 @@
+import { parseUnits } from "ethers";
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { STAKING_CONTRACT } from "../configs";
 import stakingABI from "../contracts/stakingABI.json";
@@ -8,20 +9,24 @@ export default function useUnstake() {
 
   const unstakeToken = ({
     amount,
-    stakedNumber
+    stakedNumber,
   }: {
-    amount: bigint;
+    amount: number;
     stakedNumber: number;
   }) => {
     writeContract({
       address: STAKING_CONTRACT,
       abi: stakingABI,
       functionName: "unstake",
-      args: [amount, stakedNumber],
+      args: [parseUnits(`${amount}`, "wei"), stakedNumber],
     });
   };
 
-  const { isLoading, isSuccess, error: receiptError } = useWaitForTransactionReceipt({
+  const {
+    isLoading,
+    isSuccess,
+    error: receiptError,
+  } = useWaitForTransactionReceipt({
     hash: data,
   });
 

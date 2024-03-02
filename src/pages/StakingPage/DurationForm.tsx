@@ -6,7 +6,7 @@ import useGetStakingRewards from "../../hooks/useGetStakingRewards";
 
 type Duration = {
   period: string;
-  APY: string;
+  APY: number;
   rawDuration: number;
 };
 
@@ -26,12 +26,10 @@ export default function DurationForm({
 
   const { rewardAmount } = useGetStakingRewards({
     stakingAmounts:
-      durations && stakingAmount
-        ? durations.map(() => Number(stakingAmount) * 1e18)
-        : [],
+      durations && stakingAmount ? durations.map(() => stakingAmount) : [],
     rawDurations:
       durations && stakingAmount
-        ? durations.map((duration) => Number(duration.rawDuration))
+        ? durations.map((duration) => duration.rawDuration)
         : [],
   });
 
@@ -47,7 +45,7 @@ export default function DurationForm({
     if (durationThresholds) {
       const mappeDurations = durationThresholds.map((duration) => ({
         period: `${formatTimeToLongStr(Number(duration.threshold))}`,
-        APY: `${Number(duration.multiplier) / 100}`,
+        APY: Number(duration.multiplier) / 100,
         rawDuration: Number(duration.threshold),
       }));
       setDurations(mappeDurations);
@@ -84,7 +82,7 @@ export default function DurationForm({
                 {duration.period}
               </h1>
               <h1 className="text-white text-3xl font-quicksand font-semibold">
-                {Number(duration.APY) / 100} X
+                {duration.APY / 100} X
               </h1>
               <h1 className="text-white text-base font-quicksand">
                 Multiplier

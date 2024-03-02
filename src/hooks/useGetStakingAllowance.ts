@@ -2,6 +2,7 @@ import { STAKING_CONTRACT } from "../configs";
 import useReadTokenContract from "./useReadTokenContract";
 import useCurrentAccount from "./useCurrentAccount";
 import usePushError from "./usePushError";
+import { formatUnits } from "ethers";
 
 export default function useGetStakingAllowance() {
   const account = useCurrentAccount();
@@ -13,7 +14,7 @@ export default function useGetStakingAllowance() {
   usePushError(result.error);
 
   return {
-    allowance: Number(result?.data) / 1e18,
+    allowance: Number(formatUnits(`${result?.data || 0}`, 18)),
     isLoading: result.isLoading,
   };
 }
