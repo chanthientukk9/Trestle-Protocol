@@ -1,7 +1,6 @@
 import { useAccount } from "wagmi";
 import useReadTokenContract from "./useReadTokenContract";
-import { formatEther } from "ethers";
-import { BigNumberish } from "ethers";
+import { formatUnits } from "ethers";
 import usePushError from "./usePushError";
 
 export default function useBalanceOf() {
@@ -14,7 +13,7 @@ export default function useBalanceOf() {
   usePushError(accounnt.isConnected ? result.error : null);
 
   return {
-    balance: Number(formatEther((result.data || 0) as BigNumberish)),
+    balance: Number(formatUnits(`${result.data || 0}`, 18)),
     isLoading: result.isLoading,
     error: result.error,
   };

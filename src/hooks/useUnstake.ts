@@ -18,7 +18,7 @@ export default function useUnstake() {
       address: STAKING_CONTRACT,
       abi: stakingABI,
       functionName: "unstake",
-      args: [parseUnits(`${amount}`, "wei"), stakedNumber],
+      args: [parseUnits(`${amount}`, 18), stakedNumber],
     });
   };
 

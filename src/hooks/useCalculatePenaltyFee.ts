@@ -12,13 +12,17 @@ export default function useCalculatePenaltyFee({
 }) {
   const { result } = useReadPenaltyFeeContract({
     functionName: "calculate",
-    args: [parseUnits(`${unstakingAmount}`, "wei"), duration || 0, STAKING_CONTRACT],
+    args: [
+      parseUnits(`${unstakingAmount}`, 18),
+      duration || 0,
+      STAKING_CONTRACT,
+    ],
   });
 
   usePushError(result.error);
 
   return {
-    penaltyFee: Number(formatUnits(`${result.data || 0}`, "ether")),
+    penaltyFee: Number(formatUnits(`${result.data || 0}`, 18)),
     isLoading: result.isLoading,
     error: result.error,
   };

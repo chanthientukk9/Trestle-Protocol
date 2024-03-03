@@ -5,7 +5,6 @@ import multiplyABI from "../contracts/multiplyABI.json";
 import stakingABI from "../contracts/stakingABI.json";
 import usePushError from "./usePushError";
 import { formatUnits, parseUnits } from "ethers";
-import { BigNumberish } from "ethers";
 
 export default function useGetStakingRewards({
   stakingAmounts,
@@ -25,13 +24,13 @@ export default function useGetStakingRewards({
       address: MULTIPLY_CONTRACT,
       abi: multiplyABI,
       functionName: "applyMultiplier",
-      args: [parseUnits(`${stakingAmount}`, "wei"), rawDurations[index]],
+      args: [parseUnits(`${stakingAmount}`, 18), rawDurations[index]],
     })) as readonly unknown[],
   });
 
   const amounts = results?.data
     ? (results?.data || []).map((amount) =>
-        Number(formatUnits(amount.result as BigNumberish, "ether"))
+        Number(formatUnits(`${amount.result || 0}`, 18))
       )
     : [];
 
@@ -42,7 +41,7 @@ export default function useGetStakingRewards({
   });
 
   const formatedWeighted = Number(
-    formatUnits(`${totalWeightedStake || 0}`, "ether")
+    formatUnits(`${totalWeightedStake || 0}`, 18)
   );
 
   const rewardAmount = stakingAmounts.map(

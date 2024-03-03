@@ -29,7 +29,7 @@ export default function useGetUserStakingData(): {
 
   const stakingList: StakeItem[] = ((result.data || []) as StakeRawData[]).map(
     (stake) => ({
-      stakedAmount: Number(formatUnits(stake.stakedAmount || 0, "ether")),
+      stakedAmount: Number(formatUnits(stake.stakedAmount || 0, 18)),
       duration: Number(stake.duration || 0),
       minimumStakeTimestamp: Number(stake.minimumStakeTimestamp || 0),
     })
