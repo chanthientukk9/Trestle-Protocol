@@ -3,25 +3,17 @@ import Button from "../../components/Button";
 import useApproveToken from "../../hooks/useApproveToken";
 import useGetStakingAllowance from "../../hooks/useGetStakingAllowance";
 import useStake from "../../hooks/useStake";
-import { useEffect } from "react";
-
-type Duration = {
-  period: string;
-  APY: number;
-  rawDuration: number;
-};
+import { useContext, useEffect } from "react";
+import { StakingContext } from "./StakingContext";
 
 export default function ReviewForm({
-  stakingAmount,
-  duration,
   onSubmit,
   onBack,
 }: {
-  stakingAmount: number;
-  duration?: Duration;
   onSubmit: () => void;
   onBack?: () => void;
 }) {
+  const { stakingAmount, stakingDuration } = useContext(StakingContext);
   const { allowance, isLoading: isLoadingAllowance } = useGetStakingAllowance();
   const { approveStaking, isLoading: isApproving } = useApproveToken({
     amount: stakingAmount,
@@ -36,7 +28,7 @@ export default function ReviewForm({
     stakeToken({
       amount: stakingAmount,
       stakeTime: 0,
-      unstakeTime: duration?.rawDuration || 0,
+      unstakeTime: stakingDuration?.rawDuration || 0,
     });
   };
 
@@ -76,10 +68,10 @@ export default function ReviewForm({
                 Duration
               </h1>
               <h1 className="text-white text-sm font-quicksand bg-white/5 py-2 px-4 rounded-xl mb-2">
-                {duration?.period || ""}
+                {stakingDuration?.period || ""}
               </h1>
               <h1 className="text-white text-3xl font-quicksand font-semibold">
-                {(duration?.APY || 0) / 100} X
+                {(stakingDuration?.APY || 0) / 100} X
               </h1>
               <h1 className="text-white text-base font-quicksand">
                 Multiplier

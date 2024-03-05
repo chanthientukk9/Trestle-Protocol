@@ -1,28 +1,20 @@
-import { useEffect, useState } from "react";
-import useGetDurationThresholds from "../../hooks/useGetDurationThresholds";
-import { formatTimeToLongStr } from "../../utils";
+import { useContext, useState } from "react";
+import useGetStakingDurations from "../../hooks/useGetStakingDurations";
 import Button from "../../components/Button";
 import useGetStakingRewards from "../../hooks/useGetStakingRewards";
-
-type Duration = {
-  period: string;
-  APY: number;
-  rawDuration: number;
-};
+import { StakingContext } from "./StakingContext";
 
 export default function DurationForm({
-  stakingAmount,
   onSubmit,
   onBack,
 }: {
-  stakingAmount: number;
-  onSubmit: (duration: Duration) => void;
+  onSubmit: () => void;
   onBack?: () => void;
 }) {
-  const [durations, setDurations] = useState<Duration[]>([]);
+  const { stakingAmount, setStakingDuration } = useContext(StakingContext);
   const [selectedDurationIndex, setSelectedDurationIndex] = useState(0);
-  const { durationThresholds, isLoading: isLoadingDurationThresholds } =
-    useGetDurationThresholds();
+  const { durations, isLoading: isLoadingStakingDurations } =
+    useGetStakingDurations();
 
   const { rewardAmount } = useGetStakingRewards({
     stakingAmounts:
@@ -35,22 +27,12 @@ export default function DurationForm({
 
   const handleSelectDuration = (index: number) => () => {
     setSelectedDurationIndex(index);
+    setStakingDuration(durations[index]);
   };
 
   const handleSubmit = () => {
-    onSubmit(durations[selectedDurationIndex]);
+    onSubmit();
   };
-
-  useEffect(() => {
-    if (durationThresholds) {
-      const mappeDurations = durationThresholds.map((duration) => ({
-        period: `${formatTimeToLongStr(Number(duration.threshold))}`,
-        APY: Number(duration.multiplier) / 100,
-        rawDuration: Number(duration.threshold),
-      }));
-      setDurations(mappeDurations);
-    }
-  }, [durationThresholds]);
 
   return (
     <>
@@ -60,7 +42,7 @@ export default function DurationForm({
         </h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full">
-        {isLoadingDurationThresholds && <div>Loading...</div>}
+        {isLoadingStakingDurations && <div>Loading...</div>}
         {durations.map((duration, index) => (
           <div
             key={index}

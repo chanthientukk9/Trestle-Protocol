@@ -1,34 +1,31 @@
 import Button from "../../components/Button";
-import { useState } from "react";
+import { useContext } from "react";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import useCheckConnected from "../../hooks/useCheckConntected";
 import useBalanceOf from "../../hooks/useBalanceOf";
 import TokenInput from "../../components/TokenInput";
+import { StakingContext } from "./StakingContext";
 
-export default function StakingForm({
-  onSubmit,
-}: {
-  onSubmit: (value: number) => void;
-}) {
-  const [amountValue, setAmountValue] = useState(0);
+export default function StakingForm({ onSubmit }: { onSubmit: () => void }) {
+  const { stakingAmount, setStakingAmount } = useContext(StakingContext);
   const { openConnectModal } = useConnectModal();
   const isConnected = useCheckConnected();
   const { balance } = useBalanceOf();
 
-  const submitDisabled = amountValue <= 0 || balance <= 0;
+  const submitDisabled = stakingAmount <= 0 || balance <= 0;
 
-  const handleChangeAmountValue: React.ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    setAmountValue(Math.abs(Number(e.target.value)));
+  const handleChangeStakingAmount: React.ChangeEventHandler<
+    HTMLInputElement
+  > = (e) => {
+    setStakingAmount(Math.abs(Number(e.target.value)));
   };
 
   const handleSetMaxBalance = () => {
-    setAmountValue(balance);
+    setStakingAmount(balance);
   };
 
   const handleSubmit = () => {
-    onSubmit(amountValue);
+    onSubmit();
   };
 
   return (
@@ -40,8 +37,8 @@ export default function StakingForm({
       </div>
       <TokenInput
         balance={balance}
-        value={amountValue}
-        onChange={handleChangeAmountValue}
+        value={stakingAmount}
+        onChange={handleChangeStakingAmount}
         onSetMax={handleSetMaxBalance}
       />
       <div className="flex flex-col gap-2 justify-start items-start w-full mt-[1.75rem]">
