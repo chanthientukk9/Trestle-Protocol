@@ -3,6 +3,7 @@ import useGetStakingDurations from "../../hooks/useGetStakingDurations";
 import Button from "../../components/Button";
 import useGetStakingRewards from "../../hooks/useGetStakingRewards";
 import { StakingContext } from "./StakingContext";
+import DurationItem from "./DurationItem";
 
 export default function DurationForm({
   onSubmit,
@@ -44,36 +45,18 @@ export default function DurationForm({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full">
         {isLoadingStakingDurations && <div>Loading...</div>}
         {durations.map((duration, index) => (
-          <div
+          <DurationItem
             key={index}
-            className={`border-[1.5px] border-white/10 rounded-xl w-full ${
-              selectedDurationIndex === index
-                ? "bg-white/10"
-                : "bg-white/5 cursor-pointer hover:bg-white/10 active:opacity-75"
-            } ${
+            duration={duration}
+            rewardAmount={rewardAmount[index]}
+            isSelected={selectedDurationIndex === index}
+            className={
               selectedDurationIndex !== 0 && selectedDurationIndex !== index
                 ? "opacity-70"
                 : ""
-            }`}
-          >
-            <div
-              onClick={handleSelectDuration(index)}
-              className="flex flex-col justify-between items-start w-full gap-2 p-4 bg-transparent"
-            >
-              <h1 className="text-white text-sm font-quicksand bg-white/5 py-2 px-4 rounded-xl mb-2">
-                {duration.period}
-              </h1>
-              <h1 className="text-white text-3xl font-quicksand font-semibold">
-                {duration.APY / 100} X
-              </h1>
-              <h1 className="text-white text-base font-quicksand">
-                Multiplier
-              </h1>
-              <h1 className="text-white text-sm font-quicksand font-semibold">
-                ~ {rewardAmount[index].toFixed(8)} wTIA
-              </h1>
-            </div>
-          </div>
+            }
+            onClick={handleSelectDuration(index)}
+          />
         ))}
       </div>
       <div className="flex flex-col justify-start text-lext w-full mt-6">
